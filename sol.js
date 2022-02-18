@@ -1,3 +1,5 @@
+//https://medium.com/swlh/read-html-form-data-using-get-and-post-method-in-node-js-8d2c7880adbf
+
 const fs = require('fs');
 const wordsListPath = require('word-list');
 
@@ -5,95 +7,150 @@ const wordsListPath = require('word-list');
 const wordListPath = require('word-list');
 
 const wordArray = fs.readFileSync(wordListPath, 'utf8').split('\n');
-// console.log(wordArray[0]);
 
-//input
-let badWords = ["a", "b", "c", "e", "d"]
-let goodWords = ["f", "t", "y"]
-let greenWords = [{pos: 4, word: "f"}, {pos: 2, word: "u"}]
 
-//all 5 letter words
-let lenList = wordArray.length;
-let fiveLetter = []
-for (var i =1; i < lenList; i++){
-    var lenWord = wordArray[i].length;
-    if (lenWord == 5){
-        fiveLetter.push(wordArray[i])
-    } 
-}
-// console.log(fiveLetter);
+var sqlite3 = require('sqlite3').verbose();
+let express = require('express');
+var http = require('http');
+var path = require("path");
+var bodyParser = require('body-parser');
+var helmet = require('helmet');
+var rateLimit = require("express-rate-limit");
+var bodyParser = require("body-parser");
 
-///excludin bad words
-let lengthDict = fiveLetter.length;
-let lengthBad = badWords.length;
-let exBad = []
+var app = express();
+let port = 3000;
+app.get('/', function(req,res){
+    res.sendFile(path.join(__dirname, "/index.html"));
+  });
+app.get('/styles.css', function(req, res){
+    res.sendFile(path.join(__dirname, "/styles.css"))
+})
+//if more files use app.use(express.static("public")); after putting it in a folder and remove app.get
 
-for (let words=0; words<lengthDict; words++){
-    let currentWord = fiveLetter[words];
-    // console.log(currentWord)
-    var abort = false;
-    for (let i=0; i<=lengthBad && !abort; i++){
-        // console.log(i)
-        for (let n=0; n<currentWord.length && !abort; n++)
-        {
-        //  console.log(badWords[i])
-        //  console.log(currentWord[n])
-         if (badWords[i] == currentWord[n]){
-            // console.log("break")
-            abort = true;            
-         }
-        //  else{console.log("didnotbreak")}
-        }
+var goodArray = ""
+var badArray = ""
+var perfectArray;
+app.use(bodyParser.urlencoded({extended: true}))
+app.post('/',function(req, res){
+    res.send("thanks for posting");
+    console.log("posted");
+    console.log(req.body);
+    goodArray = req.body.goodWords;
+    badArray = req.body.badWords;
+    perfectArray = req.body.perfectWords;
+    //call function that runs logic with all the data
+    logic(wordArray, goodArray, badArray, perfectArray);
+})
+
+
+app.listen(port, ()=>{
+    console.log("example app listening on port")
+})
+
+
+async function logic(wordArray, goodArray, badArray, perfectArray){
+    //input
+    let badWords = badArray.split("");
+    let goodWords = goodArray.split("");
+    let greenWords = [];
+    let pos = [];
+    for(let c=1; c<=5;c++){
+        greenWords.push({pos: c, word: perfectArray[c-1]})
     }
-    abort? null: exBad.push(currentWord)
-    // console.log("this word made it")    
-}
-console.log(exBad);
+    await console.log(greenWords);
+    let greenLength = 0;
+    for(let e=0; e<greenWords.length;e++){
+        if (greenWords[e].word != ""){
+            greenLength += 1;
+            let any = e+1;
+            pos.push(any);
+        }            
+    }
+    await console.log(pos)
+    await console.log(greenLength);
+    // console.log(badWords);
+    // console.log(goodWords);
+    
 
-//including yellow, perfect words
-let incGood = []
+    //all 5 letter words
+    let lenList = wordArray.length;
+    let fiveLetter = []
+    for (var i =1; i < lenList; i++){
+        var lenWord = wordArray[i].length;
+        if (lenWord == 5){
+            fiveLetter.push(wordArray[i])
+        } 
+    }
 
-for (let k=0; k < exBad.length; k++){
-    let passCounter = 0;
-    let currentWord = exBad[k];
-    for (let s=0; s< goodWords.length; s++){
-        abort = false;
-        for (let l=0; l<currentWord.length && !abort; l++){
-            if (goodWords[s] == currentWord[l]){
-                passCounter += 1; 
-                abort = true;
+    ///excludin bad words
+    let lengthDict = fiveLetter.length;
+    let lengthBad = badWords.length;
+    let exBad = []
+
+    for (let words=0; words<lengthDict; words++){
+        let currentWord = fiveLetter[words];
+        // console.log(currentWord)
+        var abort = false;
+        for (let i=0; i<=lengthBad && !abort; i++){
+            // console.log(i)
+            for (let n=0; n<currentWord.length && !abort; n++)
+            {
+            //  console.log(badWords[i])
+            //  console.log(currentWord[n])
+            if (badWords[i] == currentWord[n]){
+                // console.log("break")
+                abort = true;            
+            }
+            //  else{console.log("didnotbreak")}
             }
         }
+        abort? null: exBad.push(currentWord)
+        // console.log("this word made it")    
     }
-    if(passCounter == goodWords.length){
-        incGood.push(currentWord);
-        passCounter=0;
-    }else{passCounter=0}
+    console.log(exBad);
 
-}
- console.log(incGood)
-
-let finalList = [];
-for (let k=0; k < incGood.length; k++){
-    let passCounter = 0;
-    let currentWord = incGood[k];
-    for(let o=0; o<greenWords.length;o++){
-        let pos = greenWords[o].pos;
-        let word = greenWords[o].word        
-        abort = false;
-
-        for (let z=1; z<=5 && !abort;z++){
-            if (z == pos){
-                if(currentWord[pos-1] == word){
+    //including good words
+    let incGood = []
+    for (let k=0; k < exBad.length; k++){
+        let passCounter = 0;
+        let currentWord = exBad[k];
+        for (let s=0; s< goodWords.length; s++){
+            abort = false;
+            for (let l=0; l<currentWord.length && !abort; l++){
+                if (goodWords[s] == currentWord[l]){
                     passCounter += 1; 
-        
                     abort = true;
                 }
             }
         }
-    }if(passCounter == greenWords.length){
-        finalList.push(currentWord);
-        passCounter=0;
-    }else{passCounter=0}
-} 
-console.log(finalList)
+        if(passCounter == goodWords.length){
+            incGood.push(currentWord);
+            passCounter=0;
+        }else{passCounter=0}
+
+    }
+    console.log(incGood)
+
+    //including yellow, perfect words
+    let finalList = [];
+    for (let k=0; k < incGood.length; k++){
+        let passCounter = 0;
+        let currentWord = incGood[k];
+        for(let o=0; o<greenLength;o++){
+            let currentPos = pos[o];  
+            let word = greenWords[currentPos-1].word
+            if(currentWord[currentPos-1] == word){
+                passCounter += 1; 
+            }
+                
+            
+        }if(passCounter == greenLength){
+            finalList.push(currentWord);
+            passCounter=0;
+        }else{passCounter=0}
+    } 
+    console.log(finalList)
+
+}
+

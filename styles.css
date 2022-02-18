@@ -1,0 +1,17 @@
+body{
+    background-color: skyblue;
+    /* TODO flexible height*/
+    margin: 20px auto;
+    width: 70%;
+}
+#content{
+    display: flex;
+    justify-content: center;
+}
+.perfectWords input{
+    width: 30px;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+}
