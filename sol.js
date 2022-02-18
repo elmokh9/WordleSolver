@@ -31,17 +31,24 @@ app.get('/styles.css', function(req, res){
 var goodArray = ""
 var badArray = ""
 var perfectArray;
+
 app.use(bodyParser.urlencoded({extended: true}))
-app.post('/',function(req, res){
-    res.send("thanks for posting");
+app.post('/',async function(req, res){
+    
     console.log("posted");
     console.log(req.body);
     goodArray = req.body.goodWords;
     badArray = req.body.badWords;
     perfectArray = req.body.perfectWords;
     //call function that runs logic with all the data
-    logic(wordArray, goodArray, badArray, perfectArray);
+    let list = await logic(wordArray, goodArray, badArray, perfectArray);
+    if(list == ""){
+        res.send("<h1>No such words found</h1>");
+    }else{
+        res.send("<h1>No of possible answers: " + list.length + "\n" +list + "</h1>")}
+
 })
+
 
 
 app.listen(port, ()=>{
@@ -55,6 +62,8 @@ async function logic(wordArray, goodArray, badArray, perfectArray){
     let goodWords = goodArray.split("");
     let greenWords = [];
     let pos = [];
+    let finalList = [];
+
     for(let c=1; c<=5;c++){
         greenWords.push({pos: c, word: perfectArray[c-1]})
     }
@@ -67,8 +76,8 @@ async function logic(wordArray, goodArray, badArray, perfectArray){
             pos.push(any);
         }            
     }
-    await console.log(pos)
-    await console.log(greenLength);
+    console.log(pos)
+    console.log(greenLength);
     // console.log(badWords);
     // console.log(goodWords);
     
@@ -90,23 +99,19 @@ async function logic(wordArray, goodArray, badArray, perfectArray){
 
     for (let words=0; words<lengthDict; words++){
         let currentWord = fiveLetter[words];
-        // console.log(currentWord)
         var abort = false;
         for (let i=0; i<=lengthBad && !abort; i++){
-            // console.log(i)
             for (let n=0; n<currentWord.length && !abort; n++)
             {
-            //  console.log(badWords[i])
-            //  console.log(currentWord[n])
             if (badWords[i] == currentWord[n]){
-                // console.log("break")
+             
                 abort = true;            
             }
-            //  else{console.log("didnotbreak")}
+            
             }
         }
         abort? null: exBad.push(currentWord)
-        // console.log("this word made it")    
+        
     }
     console.log(exBad);
 
@@ -124,16 +129,22 @@ async function logic(wordArray, goodArray, badArray, perfectArray){
                 }
             }
         }
+        
         if(passCounter == goodWords.length){
+            
             incGood.push(currentWord);
             passCounter=0;
+            
         }else{passCounter=0}
 
     }
     console.log(incGood)
 
+    if (greenLength == 0){
+        finalList = incGood
+    }else{
     //including yellow, perfect words
-    let finalList = [];
+    
     for (let k=0; k < incGood.length; k++){
         let passCounter = 0;
         let currentWord = incGood[k];
@@ -143,14 +154,12 @@ async function logic(wordArray, goodArray, badArray, perfectArray){
             if(currentWord[currentPos-1] == word){
                 passCounter += 1; 
             }
-                
-            
         }if(passCounter == greenLength){
             finalList.push(currentWord);
             passCounter=0;
         }else{passCounter=0}
-    } 
-    console.log(finalList)
-
+    }} 
+    console.log(finalList);
+    return (finalList);
 }
 
