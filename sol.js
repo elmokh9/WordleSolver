@@ -20,21 +20,34 @@ var bodyParser = require("body-parser");
 
 var app = express();
 let port = 3000;
+
+//since we are using ejs view engine
 app.get('/', function(req,res){
-    res.sendFile(path.join(__dirname, "/index.html"));
+    res.sendFile(path.join(__dirname, "/views/index.html"));
   });
+
 app.get('/styles.css', function(req, res){
     res.sendFile(path.join(__dirname, "/styles.css"))
+})
+app.get('/resultStyles.css',  function(req, res){
+    res.sendFile(path.join(__dirname, "/resultStyles.css"))
 })
 //if more files use app.use(express.static("public")); after putting it in a folder and remove app.get
 
 var goodArray = ""
 var badArray = ""
 var perfectArray;
+let displayList = [];
+
+app.get('/result', function(req, res){
+    res.sendFile(__dirname + '/views/result.html')
+})
+
+//ejs, format to send data
+app.engine('html', require('ejs').renderFile); 
 
 app.use(bodyParser.urlencoded({extended: true}))
-app.post('/',async function(req, res){
-    
+app.post('/result',async function(req, res){
     console.log("posted");
     console.log(req.body);
     goodArray = req.body.goodWords;
@@ -45,8 +58,14 @@ app.post('/',async function(req, res){
     if(list == ""){
         res.send("<h1>No such words found</h1>");
     }else{
-        res.send("<h1>No of possible answers: " + list.length + "\n" +list + "</h1>")}
-
+        // displayList = list.join('\n');
+        displayList = list;
+        // for(let p=0; p<list.length; p++){
+        //     displayList = list
+        // }
+        listLength = list.length;
+        res.render(__dirname + '/views/result.html', {name:"hola", list: displayList, listLen: listLength} )
+    }
 })
 
 
@@ -116,6 +135,7 @@ async function logic(wordArray, goodArray, badArray, perfectArray){
     console.log(exBad);
 
     //including good words
+    //TODO if no good words still pass the list
     let incGood = []
     for (let k=0; k < exBad.length; k++){
         let passCounter = 0;
@@ -137,6 +157,9 @@ async function logic(wordArray, goodArray, badArray, perfectArray){
             
         }else{passCounter=0}
 
+    }
+    if(incGood == ""){
+        incGood = exBad;
     }
     console.log(incGood)
 

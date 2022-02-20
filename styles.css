@@ -1,17 +1,52 @@
 body{
     background-color: skyblue;
+    box-sizing: border-box;
+    
     /* TODO flexible height*/
-    margin: 20px auto;
-    width: 70%;
-}
-#content{
-    display: flex;
-    justify-content: center;
+    /* margin: 20px auto;
+    width: 70%; */
 }
 .perfectWords input{
-    width: 30px;
+    max-width: 70px !important;
+    width: 100% !important;
 }
-.btn{
-    display: flex;
+/* @media screen and (max-width:640px){
+    input {
+        max-height: 40px !important;
+    }
+} */
+/* @media screen and (max-width:640px){
+    .perfectWords div{
+        max-width: 50px !important;
+    }
+} */
+/* @media screen and (max-width:370px){
+    .perfectWords input{
+        max-width: 30px !important;
+    }
+} */
+input{
+    border-radius: 1px !important;
+    border: 1px solid black !important;
+}
+#content{
+    /* display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center; */
+}
+.heading{
+    /* font-size: large;
+    font-weight: 100;
+    color: black; */
+}
+.perfectWords input{
+    /* width: 30px; */
+}
+.butn{
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    /* display: flex;
+    justify-content: center; */
 }

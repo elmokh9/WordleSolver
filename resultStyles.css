@@ -1,0 +1,19 @@
+body{
+    background-color: hsl(160, 100%, 75%);
+}
+.main{
+    box-sizing: border-box;
+    margin: auto;
+    width: 90%; 
+}
+.ans{
+    
+}
+.main h1{
+    
+}
+.list{
+    width: min-content;
+    background-color: hsl(160, 72%, 42%);
+    white-space: pre;
+}
