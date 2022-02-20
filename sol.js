@@ -64,7 +64,7 @@ app.post('/result',async function(req, res){
         //     displayList = list
         // }
         listLength = list.length;
-        res.render(__dirname + '/views/result.html', {name:"hola", list: displayList, listLen: listLength} )
+        res.render(__dirname + '/views/result.ejs', {name:"hola", list: displayList, listLen: listLength} )
     }
 })
 

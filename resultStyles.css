@@ -1,4 +1,31 @@
-body{
+
+
+ul{
+    list-style: none;
+    display: flex;
+    flex-flow: wrap;
+}
+ul li{
+    
+    /* width: 10em;
+    float: left; */
+}
+/* @media screen and (max-width: 500px){
+    ul li{
+        width: 5em;
+        float: left;
+    }   
+} */
+.word{
+    padding-left: 10px !important;
+    padding-right: 10px;
+    background-color: #28A745;
+    width: 100px;
+    border-radius: 1.5px !important;
+}
+
+
+/* body{
     background-color: hsl(160, 100%, 75%);
 }
 .main{
@@ -16,4 +43,4 @@ body{
     width: min-content;
     background-color: hsl(160, 72%, 42%);
     white-space: pre;
-}
+} */
