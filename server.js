@@ -19,7 +19,7 @@ var rateLimit = require("express-rate-limit");
 var bodyParser = require("body-parser");
 
 var app = express();
-let port = 3000;
+// let port = 3000;
 
 //since we are using ejs view engine
 app.get('/', function(req,res){
@@ -68,11 +68,12 @@ app.post('/result',async function(req, res){
     }
 })
 
+//since we are using heroku
+.listen(process.env.PORT || 5000)
 
-
-app.listen(port, ()=>{
-    console.log("example app listening on port")
-})
+// app.listen(port, ()=>{
+//     console.log("example app listening on port")
+// })
 
 
 async function logic(wordArray, goodArray, badArray, perfectArray){
