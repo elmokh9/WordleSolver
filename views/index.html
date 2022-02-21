@@ -15,16 +15,16 @@
             <div class="row heading text-center mb-3"><h1>Wordle Solver</h1></div>
             <div class="row align-items-center">
             <form action="/result" method="POST">
-                <div class="row mb-3 align-items-center">
-                    <label class="col-6 " for="goodWords">Enter good words(words in yellow): </label>
-                    <input type="text" class="col-3" name="goodWords" id="badWords">
+                <div class="row mb-3 row1">
+                    <label class="col-7 " for="goodWords"><h5>Enter good words(words in yellow): </h5></label>
+                    <input type="text" class="col-4 centr" name="goodWords" id="badWords">
                 </div>
-                <div class="row mb-3 align-items-center">
-                    <label class="col-6" for="badWords">Enter bad words(words in grey): </label>
-                    <input class="col-3 input-lg" type="text" name="badWords" id="badWords">
+                <div class="row mb-3 ">
+                    <label class="col-7" for="badWords"><h5>Enter bad words(words in grey): </h5></label>
+                    <input class="col-4 input-lg centr" type="text" name="badWords" id="badWords">
                 </div>
                 <div class="perfectWords row mb-3 align-items-center">
-                    <label class="col-6" for="perfectWords">Enter perfect words(words in green): </label>
+                    <label class="col-7" for="perfectWords"><h5>Enter perfect words(words in green): </h5></label>
                     <div class="col-1 p-0 perfInp"><input class="text-center" type="text" maxlength="1" name="perfectWords" id="perWords1"></div>
                     <div class="col-1 p-0 perfInp"><input class="text-center" type="text" maxlength="1" name="perfectWords" id="perWords1"></div>
                     <div class="col-1 p-0 perfInp"><input class="text-center" type="text" maxlength="1" name="perfectWords" id="perWords1"></div>
@@ -33,8 +33,8 @@
                    
                 </div>
                 <div class="butn mt-5" type="submit"><button class="btn btn-info">Search</button></div>
-                <div class="displayAns">
-                
+                <div class="note m-sm-5 m-4 p-3 text-center">
+                    <p>PS: In the wordle game, enter first two words with all different letters then use this helper for optimal result</p>
                 </div>
             </form>
             </div>
