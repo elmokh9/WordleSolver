@@ -10,11 +10,11 @@ body{
     max-width: 70px !important;
     width: 100% !important;
 }
-/* @media screen and (max-width:640px){
+@media screen and (max-width:640px){
     input {
         max-height: 40px !important;
     }
-} */
+} 
 /* @media screen and (max-width:640px){
     .perfectWords div{
         max-width: 50px !important;
