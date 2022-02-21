@@ -58,11 +58,7 @@ app.post('/result',async function(req, res){
     if(list == ""){
         res.send("<h1>No such words found</h1>");
     }else{
-        // displayList = list.join('\n');
         displayList = list;
-        // for(let p=0; p<list.length; p++){
-        //     displayList = list
-        // }
         listLength = list.length;
         res.render(__dirname + '/views/result.ejs', {name:"hola", list: displayList, listLen: listLength} )
     }
@@ -78,14 +74,16 @@ app.post('/result',async function(req, res){
 
 async function logic(wordArray, goodArray, badArray, perfectArray){
     //input
-    let badWords = badArray.split("");
-    let goodWords = goodArray.split("");
+
+    //Converting string to array
+    let badWords = badArray.toLowerCase().split("");
+    let goodWords = goodArray.toLowerCase().split("");
     let greenWords = [];
     let pos = [];
     let finalList = [];
 
     for(let c=1; c<=5;c++){
-        greenWords.push({pos: c, word: perfectArray[c-1]})
+        greenWords.push({pos: c, word: perfectArray[c-1].toLowerCase()})
     }
     await console.log(greenWords);
     let greenLength = 0;
