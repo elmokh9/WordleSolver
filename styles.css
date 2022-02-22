@@ -15,6 +15,13 @@ body{
     width: 65%;
 }
 .perfectWords input{
+    border-radius: 1px !important;
+}
+input{
+    border-radius: 10px !important;
+    border: 1px solid black !important;
+}
+.perfectWords input{
     width: 100%;
     /* max-width: 70px !important;
     width: 100% !important; */
@@ -62,10 +69,7 @@ body{
         min-height: 40px !important;
     } */
 } 
-input{
-    border-radius: 1px !important;
-    border: 1px solid black !important;
-}
+
 .butn{
     margin: auto;
     width: 65%;
