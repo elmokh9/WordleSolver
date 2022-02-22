@@ -1,58 +1,81 @@
 body{
-    background-color: skyblue;
+    background-color: #28A745;
     box-sizing: border-box;
     
     /* TODO flexible height*/
     /* margin: 20px auto;
     width: 70%; */
 }
+.heading h1{
+    color: white;
+}
+.perfectWords{
+    display: flex;
+    flex-direction: row;
+    width: 65%;
+}
 .perfectWords input{
-    max-width: 70px !important;
-    width: 100% !important;
+    border-radius: 1px !important;
+}
+input{
+    border-radius: 10px !important;
+    border: 1px solid black !important;
+}
+.perfectWords input{
+    width: 100%;
+    /* max-width: 70px !important;
+    width: 100% !important; */
+}
+.perfWordsLabel h5{
+    margin-bottom: 0 !important;
+}
+.box{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100%;
+    background-color: #F0F5F8;
+}
+@media screen and (min-width:640px){
+    .box{
+        width: 60% !important;
+    }
+    .butn{
+        width: 65% !important;
+    }
+} 
+.main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.row1{
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.row2{
+    margin: auto;
+    width: 65%;
 }
 .centr{
     margin: auto;
 }
-/* input{
-    height: 10px !important;
-} */
+::placeholder{
+    color: grey;
+}
 @media screen and (max-width:640px){
-    input {
+    /* input {
         min-height: 40px !important;
-    }
+    } */
 } 
-/* @media screen and (max-width:640px){
-    .perfectWords div{
-        max-width: 50px !important;
-    }
-} */
-/* @media screen and (max-width:370px){
-    .perfectWords input{
-        max-width: 30px !important;
-    }
-} */
-input{
-    border-radius: 1px !important;
-    border: 1px solid black !important;
-}
-#content{
-    /* display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center; */
-}
-.heading{
-    /* font-size: large;
-    font-weight: 100;
-    color: black; */
-}
-.perfectWords input{
-    /* width: 30px; */
-}
+
 .butn{
     margin: auto;
-    width: 100%;
+    width: 65%;
     text-align: center;
-    /* display: flex;
-    justify-content: center; */
+}
+button{
+    width: 100% ;
+    /* background-color: danger !important; */
 }
